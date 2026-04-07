@@ -1,0 +1,120 @@
+{
+  "burgers": [
+    {
+      "id": "classic-beef",
+      "title": "Classic Beef Burger",
+      "steps": [
+        {
+          "id": "bun",
+          "type": "multiple-choice",
+          "instruction": "Choose your bun",
+          "options": ["Sesame", "Brioche", "Lettuce Wrap"]
+        },
+        {
+          "id": "protein",
+          "type": "multiple-choice",
+          "instruction": "Choose your protein",
+          "options": ["Beef", "Double Beef", "Plant-Based"]
+        },
+        {
+          "id": "sauce",
+          "type": "text",
+          "instruction": "Enter number of sauce servings",
+          "feedback": {
+            "condition": "value > 3",
+            "message": "Too much sauce might overpower the flavor!"
+          }
+        },
+        {
+          "id": "presentation",
+          "type": "image-selection",
+          "instruction": "Choose your burger presentation",
+          "imageOptions": [
+            {
+              "url": "https://via.placeholder.com/120?text=Classic",
+              "label": "Classic Style"
+            },
+            {
+              "url": "https://via.placeholder.com/120?text=Stacked",
+              "label": "Stacked Style"
+            },
+            {
+              "url": "https://via.placeholder.com/120?text=Open",
+              "label": "Open Style"
+            }
+          ]
+        },
+        {
+          "id": "toppings",
+          "type": "multiple-choice",
+          "instruction": "Choose toppings",
+          "options": ["Lettuce", "Tomato", "Pickles", "Onions"]
+        },
+        {
+          "id": "extras",
+          "type": "multiple-choice",
+          "instruction": "Choose extras",
+          "options": ["Cheese", "Bacon", "Avocado", "Fried Egg"]
+        }
+      ]
+    },
+    {
+      "id": "grilled-chicken",
+      "title": "Grilled Chicken Burger",
+      "steps": [
+        {
+          "id": "bun",
+          "type": "multiple-choice",
+          "instruction": "Choose your bun",
+          "options": ["Whole Wheat", "Brioche", "Lettuce Wrap"]
+        },
+        {
+          "id": "protein",
+          "type": "multiple-choice",
+          "instruction": "Choose your protein",
+          "options": ["Grilled Chicken", "Spicy Chicken", "Crispy Chicken"]
+        },
+        {
+          "id": "sauce",
+          "type": "text",
+          "instruction": "Enter number of sauce servings",
+          "feedback": {
+            "condition": "value > 2",
+            "message": "That might be too much sauce for a chicken burger!"
+          }
+        },
+        {
+          "id": "presentation",
+          "type": "image-selection",
+          "instruction": "Choose your burger presentation",
+          "imageOptions": [
+            {
+              "url": "https://via.placeholder.com/120?text=Grilled",
+              "label": "Grilled Style"
+            },
+            {
+              "url": "https://via.placeholder.com/120?text=Stacked",
+              "label": "Stacked Style"
+            },
+            {
+              "url": "https://via.placeholder.com/120?text=Wrap",
+              "label": "Wrap Style"
+            }
+          ]
+        },
+        {
+          "id": "toppings",
+          "type": "multiple-choice",
+          "instruction": "Choose toppings",
+          "options": ["Lettuce", "Tomato", "Cucumber", "Spinach"]
+        },
+        {
+          "id": "extras",
+          "type": "multiple-choice",
+          "instruction": "Choose extras",
+          "options": ["Cheese", "Bacon", "Avocado", "Extra Chicken"]
+        }
+      ]
+    }
+  ]
+}

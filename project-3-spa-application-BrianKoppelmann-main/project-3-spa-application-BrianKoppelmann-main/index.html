@@ -1,0 +1,195 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Burger Builder</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+  <div id="app"></div>
+  <div id="summary" class="mt-4"></div>
+</div>
+
+<script id="start-template" type="text/x-handlebars-template">
+  <h2>Enter Your Name</h2>
+  <input id="username" class="form-control mb-3" />
+  <button class="btn btn-success mb-3" onclick="Controller.saveName()">Start</button>
+
+  <h3>Select a Burger</h3>
+  {{#each burgers}}
+    <button class="btn btn-primary m-2" onclick="Controller.selectBurger('{{id}}')">
+      {{title}}
+    </button>
+  {{/each}}
+</script>
+
+<script id="step-template" type="text/x-handlebars-template">
+  <h3>{{instruction}}</h3>
+
+  {{#if options}}
+    {{#each options}}
+      <button class="btn btn-secondary m-2"
+        onclick="Controller.handleSelection('{{../id}}','{{this}}')">
+        {{this}}
+      </button>
+    {{/each}}
+  {{/if}}
+
+  {{#if imageOptions}}
+    {{#each imageOptions}}
+      <img src="{{url}}" width="120" class="m-2 border"
+        onclick="Controller.handleSelection('{{../id}}','{{label}}')"/>
+    {{/each}}
+  {{/if}}
+
+  {{#if isText}}
+    <input id="textInput" class="form-control mt-2" />
+    <button class="btn btn-primary mt-2"
+      onclick="Controller.handleSelection('{{id}}', document.getElementById('textInput').value)">
+      Submit
+    </button>
+  {{/if}}
+</script>
+
+<script id="confirmation-template" type="text/x-handlebars-template">
+  <h4>{{message}}</h4>
+</script>
+
+<script id="feedback-template" type="text/x-handlebars-template">
+  <div class="alert alert-warning">
+    <p>{{message}}</p>
+    <button class="btn btn-dark" onclick="Controller.nextStep()">Got it</button>
+  </div>
+</script>
+
+<script id="final-template" type="text/x-handlebars-template">
+  <h2>{{message}}</h2>
+  <button class="btn btn-primary" onclick="Controller.restart()">Restart</button>
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+
+<script>
+// ================= MODEL =================
+const Model = {
+  state: {
+    name: "",
+    burger: null,
+    stepIndex: 0,
+    selections: {}
+  },
+
+  async getBurgers() {
+const res = await fetch("https://my-json-server.typicode.com/BrianKoppelmann/project-3-spa-application-BrianKoppelmann/burgers");
+    return await res.json();
+  }
+  ,
+
+  async getBurgerById(id) {
+    const burgers = await this.getBurgers();
+    return burgers.find(b => b.id === id);
+  }
+};
+
+// ================= VIEW =================
+const View = {
+  render(id, data) {
+    const source = document.getElementById(id).innerHTML;
+    const template = Handlebars.compile(source);
+    document.getElementById("app").innerHTML = template(data);
+  },
+
+  updateSummary() {
+    const s = Model.state;
+    document.getElementById("summary").innerHTML = `
+      <h4>Order Summary</h4>
+      <p><strong>Name:</strong> ${s.name}</p>
+      <p><strong>Burger:</strong> ${s.burger?.title || ""}</p>
+      <ul>${Object.values(s.selections).map(v=>`<li>${v}</li>`).join("")}</ul>
+    `;
+  }
+};
+
+// ================= CONTROLLER =================
+const Controller = {
+
+  async init() {
+    const burgers = await Model.getBurgers();
+    View.render("start-template", { burgers });
+  },
+
+  saveName() {
+    Model.state.name = document.getElementById("username").value;
+    View.updateSummary();
+  },
+
+  async selectBurger(id) {
+    const burger = await Model.getBurgerById(id);
+    Model.state.burger = burger;
+    Model.state.stepIndex = 0;
+    Model.state.selections = {};
+
+    this.loadStep();
+    View.updateSummary();
+  },
+
+  loadStep() {
+    const step = Model.state.burger.steps[Model.state.stepIndex];
+
+    // mark text type
+    if (step.type === "text") step.isText = true;
+
+    View.render("step-template", step);
+  },
+
+  handleSelection(id, value) {
+    Model.state.selections[id] = value;
+    View.updateSummary();
+
+    const step = Model.state.burger.steps[Model.state.stepIndex];
+
+    // FEEDBACK CHECK
+    if (step.feedback) {
+      const num = Number(value);
+      if (!isNaN(num) && num > 3) {
+        View.render("feedback-template", { message: step.feedback.message });
+        return;
+      }
+    }
+
+    View.render("confirmation-template", { message: "Nice choice!" });
+
+    setTimeout(() => this.nextStep(), 1000);
+  },
+
+  nextStep() {
+    Model.state.stepIndex++;
+
+    if (Model.state.stepIndex >= Model.state.burger.steps.length) {
+      this.finish();
+    } else {
+      this.loadStep();
+    }
+  },
+
+  finish() {
+    const skipped = Object.keys(Model.state.selections).length < Model.state.burger.steps.length;
+
+    const msg = skipped
+      ? `Oops, ${Model.state.name}! You skipped a few steps. Want to try again?`
+      : `Thank you, ${Model.state.name}! Your burger is on the grill!`;
+
+    View.render("final-template", { message: msg });
+  },
+
+  restart() {
+    location.reload();
+  }
+};
+
+Controller.init();
+</script>
+</body>
+</html>
