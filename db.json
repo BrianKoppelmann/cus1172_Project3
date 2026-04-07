@@ -89,15 +89,15 @@
           "instruction": "Choose your burger presentation",
           "imageOptions": [
             {
-              "url": "https://via.placeholder.com/120?text=Grilled",
+              "url": "classicBurger.jpg",
               "label": "Grilled Style"
             },
             {
-              "url": "https://via.placeholder.com/120?text=Stacked",
+              "url": "stackedBurger.jpg",
               "label": "Stacked Style"
             },
             {
-              "url": "https://via.placeholder.com/120?text=Wrap",
+              "url": "wrappedBurger.jpg",
               "label": "Wrap Style"
             }
           ]

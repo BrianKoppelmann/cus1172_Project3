@@ -70,9 +70,7 @@
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-
 <script>
-// ================= MODEL =================
 const Model = {
   state: {
     name: "",
@@ -93,7 +91,6 @@ const res = await fetch("https://my-json-server.typicode.com/BrianKoppelmann/cus
   }
 };
 
-// ================= VIEW =================
 const View = {
   render(id, data) {
     const source = document.getElementById(id).innerHTML;
@@ -112,9 +109,7 @@ const View = {
   }
 };
 
-// ================= CONTROLLER =================
 const Controller = {
-
   async init() {
     const burgers = await Model.getBurgers();
     View.render("start-template", { burgers });
@@ -138,7 +133,6 @@ const Controller = {
   loadStep() {
     const step = Model.state.burger.steps[Model.state.stepIndex];
 
-    // mark text type
     if (step.type === "text") step.isText = true;
 
     View.render("step-template", step);
@@ -150,7 +144,6 @@ const Controller = {
 
     const step = Model.state.burger.steps[Model.state.stepIndex];
 
-    // FEEDBACK CHECK
     if (step.feedback) {
       const num = Number(value);
       if (!isNaN(num) && num > 3) {
@@ -159,7 +152,7 @@ const Controller = {
       }
     }
 
-    View.render("confirmation-template", { message: "Nice choice!" });
+    View.render("confirmation-template", { message: "Nice choice" });
 
     setTimeout(() => this.nextStep(), 1000);
   },
@@ -179,7 +172,7 @@ const Controller = {
 
     const msg = skipped
       ? `Oops, ${Model.state.name}! You skipped a few steps. Want to try again?`
-      : `Thank you, ${Model.state.name}! Your burger is on the grill!`;
+      : `Thank you, ${Model.state.name}! Your burger will be ready shortly`;
 
     View.render("final-template", { message: msg });
   },
