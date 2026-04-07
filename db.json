@@ -40,7 +40,7 @@
             },
             {
               "url": "images/wrappedBurger.jpg",
-              "label": "Open Style"
+              "label": "Lettuce Wrap Style"
             }
           ]
         },
@@ -90,15 +90,15 @@
           "imageOptions": [
             
             {
-              "url": "https://via.placeholder.com/120?text=Classic",
+              "url": "images/grilledChickenBurger.jpg",
               "label": "Grilled Style"
             },
             {
-              "url": "https://via.placeholder.com/120?text=Stacked",
+              "url": "images/stackedChickenBurger.jpg",
               "label": "Stacked Style"
             },
             {
-              "url": "https://via.placeholder.com/120?text=Open",
+              "url": "images/wrappedChickenBurger.jpg",
               "label": "Wrap Style"
             }
           ]
