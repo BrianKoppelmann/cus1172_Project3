@@ -26,20 +26,20 @@
           }
         },
         {
-          "id": "presentation",
+                    "id": "presentation",
           "type": "image-selection",
           "instruction": "Choose your burger presentation",
           "imageOptions": [
             {
-              "url": "https://via.placeholder.com/120?text=Classic",
+              "url": "images/classicBurger.jpg",
               "label": "Classic Style"
             },
             {
-              "url": "https://via.placeholder.com/120?text=Stacked",
+              "url": "images/stackedBurger.jpg",
               "label": "Stacked Style"
             },
             {
-              "url": "https://via.placeholder.com/120?text=Open",
+              "url": "images/wrappedBurger.jpg",
               "label": "Open Style"
             }
           ]
@@ -88,16 +88,17 @@
           "type": "image-selection",
           "instruction": "Choose your burger presentation",
           "imageOptions": [
+            
             {
-              "url": "classicBurger.jpg",
+              "url": "https://via.placeholder.com/120?text=Classic",
               "label": "Grilled Style"
             },
             {
-              "url": "stackedBurger.jpg",
+              "url": "https://via.placeholder.com/120?text=Stacked",
               "label": "Stacked Style"
             },
             {
-              "url": "wrappedBurger.jpg",
+              "url": "https://via.placeholder.com/120?text=Open",
               "label": "Wrap Style"
             }
           ]
